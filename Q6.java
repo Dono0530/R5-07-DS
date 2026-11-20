@@ -22,7 +22,7 @@ public class Q6 {
         for (int ligne = 1; ligne <= n; ligne++) {
             for (int valeur = 1; valeur <= ligne; valeur++) {
                 if (valeur > 1) System.out.print(" ");
-                System.out.print("X");
+                System.out.print("O");
             }
             System.out.println();
         }
