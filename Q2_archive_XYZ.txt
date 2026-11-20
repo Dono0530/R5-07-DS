@@ -1,0 +1,7 @@
+Donovan Prévost
+Date et heure d'execution : 20-11-2026 12:56:44 UTC
+Contenu de XYZ.txt :
+
+
+Taille de XYZ.txt (octets) :
+1
