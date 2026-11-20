@@ -1,0 +1,34 @@
+name: Q3
+on:
+  push:
+    paths:
+      - 'Q3.java'
+      - '.github/workflows/Q3.yaml'
+
+permissions:
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le depot
+        uses: actions/checkout@v4
+
+      - name: Archiver Q3.java
+        run: |
+          {
+            echo "Prévost Donovan"
+            echo "Source de Q3.java :"
+            cat Q3.java
+          } > Q3_archive_java.txt
+
+      - name: Publier le rapport
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Q3_archive_java.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "Q3 : archive du programme Java"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
