@@ -1,1 +1,11 @@
-Pas d'archive precedente : premiere execution.
+--- Q6_archive_20-11-2026-133245.txt	2026-11-20 13:34:13.804716505 +0000
++++ Q6_archive_20-11-2026-133413.txt	2026-11-20 13:34:13.901717875 +0000
+@@ -24,7 +24,7 @@
+         for (int ligne = 1; ligne <= n; ligne++) {
+             for (int valeur = 1; valeur <= ligne; valeur++) {
+                 if (valeur > 1) System.out.print(" ");
+-                System.out.print("X");
++                System.out.print("O");
+             }
+             System.out.println();
+         }
