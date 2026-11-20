@@ -1,0 +1,67 @@
+name: Q6
+on:
+  push:
+    paths:
+      - 'Q6.java'
+      - '.github/workflows/Q6.yaml'
+
+permissions:
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le depot
+        uses: actions/checkout@v4
+
+      - name: Creer archive et differences
+        run: |
+          DATE=$(date +%d-%m-%Y-%H%M%S)
+          RAPPORT="Q6_archive_${DATE}.txt"
+
+          PRECEDENT=$(python3 << 'PY'
+          import glob
+          from datetime import datetime
+
+          fichiers = glob.glob("Q6_archive_*.txt")
+          precedent = max(
+              fichiers,
+              key=lambda f: datetime.strptime(
+                  f[len("Q6_archive_"):-len(".txt")], "%d-%m-%Y-%H%M%S"
+              ),
+              default="",
+          )
+          print(precedent)
+          PY
+          )
+
+          {
+            echo "Prévost Donovan"
+            echo "Source de Q6.java :"
+            cat Q6.java
+            echo
+            echo "Nombre d'octets puis nombre de lignes :"
+            wc -c -l Q6.java
+          } > "$RAPPORT"
+
+          if [ -n "$PRECEDENT" ]; then
+            diff -u "$PRECEDENT" "$RAPPORT" > Q6_différences.txt || true
+            if [ ! -s Q6_différences.txt ]; then
+              echo "Aucune difference entre les deux archives." > Q6_différences.txt
+            fi
+          else
+            echo "Pas d'archive precedente : premiere execution." > Q6_différences.txt
+          fi
+
+          echo "RAPPORT=$RAPPORT" >> "$GITHUB_ENV"
+
+      - name: Publier les fichiers generes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$RAPPORT" Q6_différences.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "Q6 : archive et differences de Q6.java"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
