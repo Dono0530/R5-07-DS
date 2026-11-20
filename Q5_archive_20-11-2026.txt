@@ -21,9 +21,9 @@ public class Q5 {
             System.exit(1);
         }
 
-        for (int ligne = n; ligne >= 1; ligne--) {
-            for (int valeur = ligne; valeur >= 1; valeur--) {
-                if (valeur < ligne) System.out.print(" ");
+        for (int ligne = 1; ligne <= n; ligne++) {
+            for (int valeur = 1; valeur <= ligne; valeur++) {
+                if (valeur > 1) System.out.print(" ");
                 System.out.print(valeur);
             }
             System.out.println();
