@@ -1,0 +1,35 @@
+Prévost Donovan
+Source de Q6.java :
+public class Q6 {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.err.println("Usage : java Q6 N");
+            System.exit(1);
+        }
+
+        final int n;
+        try {
+            n = Integer.parseInt(args[0]);
+        } catch (NumberFormatException e) {
+            System.err.println("N doit etre un entier.");
+            System.exit(1);
+            return;
+        }
+
+        if (n < 1) {
+            System.err.println("N doit etre superieur ou egal a 1.");
+            System.exit(1);
+        }
+
+        for (int ligne = 1; ligne <= n; ligne++) {
+            for (int valeur = 1; valeur <= ligne; valeur++) {
+                if (valeur > 1) System.out.print(" ");
+                System.out.print("X");
+            }
+            System.out.println();
+        }
+    }
+}
+
+Nombre d'octets puis nombre de lignes :
+ 30 829 Q6.java
