@@ -1,0 +1,38 @@
+name: Q5
+
+on:
+  push:
+    paths:
+      - 'Q5.java'
+      - '.github/workflows/Q5.yaml'
+
+permissions:
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le depot
+        uses: actions/checkout@v4
+
+      - name: Creer une archive datee
+        run: |
+          DATE=$(date +%d-%m-%Y)
+          RAPPORT="Q5_archive_${DATE}.txt"
+          {
+            echo "Prévost Donovan"
+            echo "Source de Q5.java :"
+            cat Q5.java
+          } > "$RAPPORT"
+          echo "RAPPORT=$RAPPORT" >> "$GITHUB_ENV"
+
+      - name: Publier le rapport
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$RAPPORT"
+          if ! git diff --cached --quiet; then
+            git commit -m "Q5 : archive datee de Q5.java"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
